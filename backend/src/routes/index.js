@@ -6,8 +6,8 @@
 const express = require('express');
 const router = express.Router();
 
-// Import route modules (placeholders - will be implemented later)
-// const authRoutes = require('./auth.routes');
+// Import route modules
+const authRoutes = require('./auth.routes');
 // const userRoutes = require('./user.routes');
 // const petRoutes = require('./pet.routes');
 // const employeeRoutes = require('./employee.routes');
@@ -49,8 +49,8 @@ router.get('/', (req, res) => {
   });
 });
 
-// Mount routes (uncomment as they are implemented)
-// router.use('/auth', authRoutes);
+// Mount routes
+router.use('/auth', authRoutes);
 // router.use('/users', userRoutes);
 // router.use('/pets', petRoutes);
 // router.use('/employees', employeeRoutes);
