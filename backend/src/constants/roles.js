@@ -3,8 +3,8 @@
  */
 
 module.exports = {
-  OWNER: 'owner',
-  EMPLOYEE: 'employee',
-  ADMIN: 'admin',
-  RIDER: 'rider'
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  EMPLOYEE: 'EMPLOYEE',
+  RIDER: 'RIDER'
 };

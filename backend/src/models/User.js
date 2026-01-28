@@ -28,61 +28,28 @@ const userSchema = new mongoose.Schema(
       select: false // Don't return password by default
     },
 
+    fullName: {
+      type: String,
+      required: [true, 'Full name is required'],
+      trim: true
+    },
+
+    phone: {
+      type: String,
+      required: [true, 'Phone number is required'],
+      trim: true
+    },
+
+    address: {
+      type: String,
+      trim: true
+    },
+
     role: {
       type: String,
       enum: Object.values(ROLES),
-      default: ROLES.OWNER,
+      default: ROLES.USER,
       required: true
-    },
-
-    profile: {
-      firstName: {
-        type: String,
-        required: [true, 'First name is required'],
-        trim: true
-      },
-      lastName: {
-        type: String,
-        required: [true, 'Last name is required'],
-        trim: true
-      },
-      phoneNumber: {
-        type: String,
-        required: [true, 'Phone number is required']
-      },
-      avatar: {
-        type: String,
-        default: null
-      },
-      dateOfBirth: Date,
-      gender: {
-        type: String,
-        enum: ['male', 'female', 'other']
-      },
-      address: {
-        street: String,
-        city: String,
-        state: String,
-        zipCode: String,
-        country: {
-          type: String,
-          default: 'USA'
-        },
-        coordinates: {
-          type: {
-            type: String,
-            default: 'Point'
-          },
-          coordinates: {
-            type: [Number],
-            default: undefined
-          }
-        }
-      },
-      bio: {
-        type: String,
-        maxlength: 500
-      }
     },
 
     verification: {
@@ -175,16 +142,11 @@ const userSchema = new mongoose.Schema(
 userSchema.index({ email: 1 });
 userSchema.index({ role: 1 });
 userSchema.index({ status: 1 });
-userSchema.index({ 'profile.address.coordinates': '2dsphere' });
 userSchema.index({ createdAt: -1 });
 
 // =================================
 // VIRTUAL FIELDS
 // =================================
-userSchema.virtual('fullName').get(function () {
-  return `${this.profile.firstName} ${this.profile.lastName}`;
-});
-
 userSchema.virtual('isLocked').get(function () {
   return !!(this.security.lockUntil && this.security.lockUntil > Date.now());
 });
