@@ -47,6 +47,32 @@ const petSchema = new mongoose.Schema(
       }
     }],
 
+    medicalHistory: [{
+      illness: {
+        type: String,
+        required: [true, 'Illness is required'],
+        trim: true
+      },
+      treatment: {
+        type: String,
+        required: [true, 'Treatment is required'],
+        trim: true
+      },
+      vetName: {
+        type: String,
+        required: [true, 'Vet name is required'],
+        trim: true
+      },
+      visitDate: {
+        type: Date,
+        required: [true, 'Visit date is required']
+      },
+      notes: {
+        type: String,
+        trim: true
+      }
+    }],
+
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
