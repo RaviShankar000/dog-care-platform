@@ -28,6 +28,25 @@ const petSchema = new mongoose.Schema(
       min: [0, 'Weight cannot be negative']
     },
 
+    vaccinations: [{
+      vaccineName: {
+        type: String,
+        required: [true, 'Vaccine name is required'],
+        trim: true
+      },
+      dateGiven: {
+        type: Date,
+        required: [true, 'Date given is required']
+      },
+      nextDueDate: {
+        type: Date
+      },
+      notes: {
+        type: String,
+        trim: true
+      }
+    }],
+
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
