@@ -52,6 +52,11 @@ exports.getMyPets = asyncHandler(async (req, res) => {
 exports.updatePet = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
+  // Validate ObjectId format (already handled by validator, but extra safety check)
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    throw new ErrorResponse('Invalid pet ID format', HTTP_STATUS.BAD_REQUEST);
+  }
+
   // Find pet and verify ownership
   let pet = await Pet.findById(id);
 
@@ -90,6 +95,11 @@ exports.updatePet = asyncHandler(async (req, res) => {
  */
 exports.deletePet = asyncHandler(async (req, res) => {
   const { id } = req.params;
+
+  // Validate ObjectId format (already handled by validator, but extra safety check)
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    throw new ErrorResponse('Invalid pet ID format', HTTP_STATUS.BAD_REQUEST);
+  }
 
   // Find pet and verify ownership
   const pet = await Pet.findById(id);
