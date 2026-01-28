@@ -8,8 +8,8 @@ const router = express.Router();
 
 // Import route modules
 const authRoutes = require('./auth.routes');
+const petRoutes = require('./pet.routes');
 // const userRoutes = require('./user.routes');
-// const petRoutes = require('./pet.routes');
 // const employeeRoutes = require('./employee.routes');
 // const serviceRoutes = require('./service.routes');
 // const bookingRoutes = require('./booking.routes');
@@ -51,8 +51,8 @@ router.get('/', (req, res) => {
 
 // Mount routes
 router.use('/auth', authRoutes);
+router.use('/pets', petRoutes);
 // router.use('/users', userRoutes);
-// router.use('/pets', petRoutes);
 // router.use('/employees', employeeRoutes);
 // router.use('/services', serviceRoutes);
 // router.use('/bookings', bookingRoutes);
