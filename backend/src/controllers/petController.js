@@ -14,7 +14,8 @@ const HTTP_STATUS = require('../constants/httpStatus');
  * @access  Private
  */
 exports.createPet = asyncHandler(async (req, res) => {
-  // Add authenticated user as the owner
+  // Automatically link pet to authenticated user
+  // Prevent manual owner manipulation from request body
   req.body.owner = req.user._id;
 
   const pet = await Pet.create(req.body);
@@ -58,7 +59,7 @@ exports.updatePet = asyncHandler(async (req, res) => {
     throw new ErrorResponse('Pet not found', HTTP_STATUS.NOT_FOUND);
   }
 
-  // Ensure user owns the pet
+  // Ensure user owns the pet (enforce ownership validation)
   if (pet.owner.toString() !== req.user._id.toString()) {
     throw new ErrorResponse(
       'Not authorized to update this pet',
@@ -66,7 +67,7 @@ exports.updatePet = asyncHandler(async (req, res) => {
     );
   }
 
-  // Prevent changing the owner
+  // Prevent changing the owner (pets remain linked to original user)
   delete req.body.owner;
 
   // Update pet
@@ -97,7 +98,7 @@ exports.deletePet = asyncHandler(async (req, res) => {
     throw new ErrorResponse('Pet not found', HTTP_STATUS.NOT_FOUND);
   }
 
-  // Ensure user owns the pet
+  // Ensure user owns the pet (enforce ownership validation)
   if (pet.owner.toString() !== req.user._id.toString()) {
     throw new ErrorResponse(
       'Not authorized to delete this pet',
