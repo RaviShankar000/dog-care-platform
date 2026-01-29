@@ -67,11 +67,24 @@ const PetListPage = () => {
     // navigate(`/pets/${petId}`);
   };
 
+  const handleAddPet = () => {
+    // Navigate to add pet form
+    console.log('Navigating to add pet form');
+    // TODO: Implement navigation
+    // navigate('/pets/new');
+  };
+
   if (loading) {
     return <div>Loading pets...</div>;
   }
 
-  return <PetList pets={pets} onPetClick={handlePetClick} />;
+  return (
+    <PetList 
+      pets={pets} 
+      onPetClick={handlePetClick}
+      onAddPet={handleAddPet}
+    />
+  );
 };
 
 export default PetListPage;

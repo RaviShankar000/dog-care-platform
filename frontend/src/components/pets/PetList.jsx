@@ -7,7 +7,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './PetList.css';
 
-const PetList = ({ pets, onPetClick }) => {
+const PetList = ({ pets, onPetClick, onAddPet }) => {
+  // Empty state handling
+  if (pets.length === 0) {
+    return (
+      <div className="pet-list-container">
+        <h2 className="pet-list-title">My Pets</h2>
+        
+        <div className="empty-state">
+          <div className="empty-state-icon">🐾</div>
+          <h3 className="empty-state-title">No Pets Yet</h3>
+          <p className="empty-state-message">
+            You haven't added any pets to your account yet. Start by adding your first furry friend!
+          </p>
+          {onAddPet && (
+            <button className="add-pet-button" onClick={onAddPet}>
+              Add Your First Pet
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="pet-list-container">
       <h2 className="pet-list-title">My Pets</h2>
@@ -87,7 +109,8 @@ PetList.propTypes = {
       medicalHistory: PropTypes.array
     })
   ).isRequired,
-  onPetClick: PropTypes.func.isRequired
+  onPetClick: PropTypes.func.isRequired,
+  onAddPet: PropTypes.func
 };
 
 export default PetList;
