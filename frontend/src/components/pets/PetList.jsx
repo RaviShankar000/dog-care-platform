@@ -5,6 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import PetCard from './PetCard';
 import './PetList.css';
 
 const PetList = ({ pets, onPetClick, onAddPet }) => {
@@ -36,61 +37,11 @@ const PetList = ({ pets, onPetClick, onAddPet }) => {
       
       <div className="pet-list-grid">
         {pets.map((pet) => (
-          <div
+          <PetCard
             key={pet._id}
-            className="pet-card"
-            onClick={() => onPetClick(pet._id)}
-            role="button"
-            tabIndex={0}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                onPetClick(pet._id);
-              }
-            }}
-          >
-            <div className="pet-card-header">
-              <h3 className="pet-name">{pet.name}</h3>
-              {pet.breed && <span className="pet-breed">{pet.breed}</span>}
-            </div>
-
-            <div className="pet-card-body">
-              <div className="pet-info">
-                {pet.age && (
-                  <div className="pet-info-item">
-                    <span className="info-label">Age:</span>
-                    <span className="info-value">{pet.age} years</span>
-                  </div>
-                )}
-                
-                {pet.weight && (
-                  <div className="pet-info-item">
-                    <span className="info-label">Weight:</span>
-                    <span className="info-value">{pet.weight} kg</span>
-                  </div>
-                )}
-              </div>
-
-              {pet.vaccinations && pet.vaccinations.length > 0 && (
-                <div className="pet-stats">
-                  <span className="stat-badge">
-                    {pet.vaccinations.length} Vaccination{pet.vaccinations.length !== 1 ? 's' : ''}
-                  </span>
-                </div>
-              )}
-
-              {pet.medicalHistory && pet.medicalHistory.length > 0 && (
-                <div className="pet-stats">
-                  <span className="stat-badge">
-                    {pet.medicalHistory.length} Medical Record{pet.medicalHistory.length !== 1 ? 's' : ''}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <div className="pet-card-footer">
-              <span className="view-profile-link">View Profile →</span>
-            </div>
-          </div>
+            pet={pet}
+            onClick={onPetClick}
+          />
         ))}
       </div>
     </div>
