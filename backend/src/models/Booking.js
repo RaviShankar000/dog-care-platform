@@ -45,8 +45,11 @@ const bookingSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ['PENDING', 'CONFIRMED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'],
-      default: 'PENDING'
+      enum: {
+        values: ['REQUESTED', 'ACCEPTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'],
+        message: '{VALUE} is not a valid booking status'
+      },
+      default: 'REQUESTED'
     },
 
     assignedEmployee: {
