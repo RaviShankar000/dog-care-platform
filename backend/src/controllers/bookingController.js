@@ -8,6 +8,7 @@ const Booking = require('../models/Booking');
 const Pet = require('../models/Pet');
 const HTTP_STATUS = require('../constants/httpStatus');
 const ErrorResponse = require('../utils/errorResponse');
+const { VALID_SERVICE_TYPES } = require('../constants/serviceTypes');
 
 /**
  * @desc    Create a new booking
@@ -15,7 +16,19 @@ const ErrorResponse = require('../utils/errorResponse');
  * @access  Private
  */
 exports.createBooking = asyncHandler(async (req, res) => {
-  const { pet: petId } = req.body;
+  const { pet: petId, serviceType } = req.body;
+
+  // Validate service type
+  if (!serviceType) {
+    throw new ErrorResponse('Service type is required', HTTP_STATUS.BAD_REQUEST);
+  }
+
+  if (!VALID_SERVICE_TYPES.includes(serviceType)) {
+    throw new ErrorResponse(
+      `Invalid service type. Allowed values: ${VALID_SERVICE_TYPES.join(', ')}`,
+      HTTP_STATUS.BAD_REQUEST
+    );
+  }
 
   // Validate pet exists
   const pet = await Pet.findById(petId);
