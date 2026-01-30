@@ -5,6 +5,7 @@
 
 const asyncHandler = require('../utils/asyncHandler');
 const Booking = require('../models/Booking');
+const Pet = require('../models/Pet');
 const HTTP_STATUS = require('../constants/httpStatus');
 const ErrorResponse = require('../utils/errorResponse');
 
@@ -14,11 +15,24 @@ const ErrorResponse = require('../utils/errorResponse');
  * @access  Private
  */
 exports.createBooking = asyncHandler(async (req, res) => {
-  // TODO: Implement booking creation logic
-  // - Validate pet belongs to user
-  // - Check service availability
-  // - Create booking
+  const { pet: petId } = req.body;
 
+  // Validate pet exists
+  const pet = await Pet.findById(petId);
+
+  if (!pet) {
+    throw new ErrorResponse('Pet not found', HTTP_STATUS.NOT_FOUND);
+  }
+
+  // Ensure pet belongs to logged-in user
+  if (pet.owner.toString() !== req.user._id.toString()) {
+    throw new ErrorResponse(
+      'Not authorized to book services for this pet',
+      HTTP_STATUS.FORBIDDEN
+    );
+  }
+
+  // Create booking
   const booking = await Booking.create({
     ...req.body,
     user: req.user._id
