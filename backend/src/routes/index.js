@@ -9,10 +9,10 @@ const router = express.Router();
 // Import route modules
 const authRoutes = require('./auth.routes');
 const petRoutes = require('./pet.routes');
+const bookingRoutes = require('./booking.routes');
 // const userRoutes = require('./user.routes');
 // const employeeRoutes = require('./employee.routes');
 // const serviceRoutes = require('./service.routes');
-// const bookingRoutes = require('./booking.routes');
 // const productRoutes = require('./product.routes');
 // const orderRoutes = require('./order.routes');
 // const reminderRoutes = require('./reminder.routes');
@@ -52,10 +52,10 @@ router.get('/', (req, res) => {
 // Mount routes
 router.use('/auth', authRoutes);
 router.use('/pets', petRoutes);
+router.use('/bookings', bookingRoutes);
 // router.use('/users', userRoutes);
 // router.use('/employees', employeeRoutes);
 // router.use('/services', serviceRoutes);
-// router.use('/bookings', bookingRoutes);
 // router.use('/products', productRoutes);
 // router.use('/orders', orderRoutes);
 // router.use('/reminders', reminderRoutes);
